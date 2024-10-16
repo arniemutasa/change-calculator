@@ -1,6 +1,6 @@
 import { Body, Controller, Post } from '@nestjs/common';
 import { ChangeService } from './change.service';
-import { CalculateChangeDto } from './calculate-change.dto';
+import { CalculateChangeDto } from './dto/calculate-change.dto';
 
 @Controller('change')
 export class ChangeController {

@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ChangeController } from './change.controller';
 import { ChangeService } from './change.service';
-import { CalculateChangeDto } from './calculate-change.dto';
+import { CalculateChangeDto } from './dto/calculate-change.dto';
 import exp from 'constants';
 
 describe('ChangeController', () => {
