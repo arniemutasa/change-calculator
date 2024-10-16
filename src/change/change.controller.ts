@@ -8,7 +8,19 @@ export class ChangeController {
     
     
     @Post("calculate")
-    calculateChange(@Body() calculateChangeDto: CalculateChangeDto){
-        return this.changeService.calculateChange(calculateChangeDto.total, calculateChangeDto.amountReceived);
+    async calculateChange(@Body() calculateChangeDto: CalculateChangeDto){
+
+        const currency = calculateChangeDto.currency || 'ZAR';
+        
+        let finalAmountReceived = calculateChangeDto.amountReceived;
+
+        if(calculateChangeDto.currency !== 'ZAR'){
+            const output = await this.changeService.callConvertCurrencyAPI(currency, calculateChangeDto.amountReceived);
+            finalAmountReceived = output;
+        }
+
+        calculateChangeDto.amountReceived = parseFloat(finalAmountReceived.toFixed(2));
+
+        return this.changeService.calculateChange(calculateChangeDto.total, calculateChangeDto.amountReceived, calculateChangeDto.currency);
     }
 }

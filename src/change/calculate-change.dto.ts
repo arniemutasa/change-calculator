@@ -1,4 +1,4 @@
-import { IsNumber } from "class-validator";
+import { IsNumber, IsOptional, IsString } from "class-validator";
 
 
 
@@ -10,4 +10,8 @@ export class CalculateChangeDto {
 
     @IsNumber()
     amountReceived: number;
+
+    @IsString()
+    @IsOptional()
+    currency: string = 'ZAR';
 }
