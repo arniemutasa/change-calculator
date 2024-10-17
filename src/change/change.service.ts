@@ -83,7 +83,6 @@ export class ChangeService {
                 changeToGive = (changeToGive % 0.05);
                 changeToGive = parseFloat(changeToGive.toFixed(2));
             }else if (changeToGive < 0.05){
-                returnChange['1c'] = Math.floor(changeToGive / 0.01);
                 changeToGive = 0;
             }
 
