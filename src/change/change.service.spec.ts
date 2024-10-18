@@ -1,20 +1,46 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { ChangeService } from './change.service';
+import { ConfigService } from '@nestjs/config';
+import { HttpModule, HttpService } from '@nestjs/axios';
+import { FloatService } from 'src/float/float.service';
+
+const mockHttpService = {
+  get: jest.fn().mockReturnValue({ data: { conversion_result: 1 } }),
+};
+
+const mockFloatRepository = {
+  findOne: jest.fn().mockResolvedValue({
+   
+      '50R': 5,
+      '20R': 10,
+      '10R': 15,
+      '5R': 20,
+      '1R': 30,
+      '50c': 25,
+      '20c': 50,
+      '10c': 100,
+      '5c': 200,
+  }),
+};
+
+const mockFloatService = {
+  getFloat: jest.fn().mockResolvedValue(mockFloatRepository.findOne()), // Use mocked repository
+  updateFloat: jest.fn().mockResolvedValue(true),
+};
 
 describe('ChangeService', () => {
   let service: ChangeService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [ChangeService],
+      imports: [HttpModule],
+      providers: [ChangeService, ConfigService, { provide: HttpService, useValue: mockHttpService },{ provide: FloatService, useValue: mockFloatService }],
     }).compile();
 
     service = module.get<ChangeService>(ChangeService);
   });
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
-  });
+  
 
   it('Should calculate the correct change and recommend the most efficient combination of notes', () => {
     const total = 120;
@@ -48,7 +74,7 @@ describe('ChangeService', () => {
       }
     }
 
-    const result = service.calculateChange(total, amountReceived);
+    const result = service.calculateChange(total, amountReceived, 'ZAR');
     expect(result).toEqual(breakdown);
   })
 
@@ -62,7 +88,7 @@ describe('ChangeService', () => {
       recommendedChange: {}
     }
 
-    const result = service.calculateChange(total, amountReceived);
+    const result = service.calculateChange(total, amountReceived, 'ZAR');
     expect(result).toEqual(breakdown);
   })
 });

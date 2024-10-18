@@ -27,7 +27,7 @@ describe('ChangeController', () => {
     expect(controller).toBeDefined();
   });
 
-  it('should call the change service with the correct arguments', () => {
+  it('should call the change service with the correct arguments', async () => {
     const calculateChangeDto: CalculateChangeDto = {
       total: 120,
       amountReceived: 200,
@@ -45,8 +45,8 @@ describe('ChangeController', () => {
       }
     }
 
-    jest.spyOn(service, 'calculateChange').mockReturnValue(result);
-    expect(controller.calculateChange(calculateChangeDto)).toEqual(result);
-    expect(service.calculateChange).toHaveBeenCalledWith(120, 200);
+    jest.spyOn(service, 'calculateChange').mockReturnValue(Promise.resolve(result));
+    expect(await controller.calculateChange(calculateChangeDto)).toEqual(result);
+    expect(service.calculateChange).toHaveBeenCalledWith(120, 200, 'ZAR');
   });
 });
