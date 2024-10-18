@@ -30,7 +30,8 @@ describe('ChangeController', () => {
   it('should call the change service with the correct arguments', () => {
     const calculateChangeDto: CalculateChangeDto = {
       total: 120,
-      amountReceived: 200
+      amountReceived: 200,
+      currency: 'ZAR',
     }
 
     const result = {

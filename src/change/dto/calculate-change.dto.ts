@@ -10,7 +10,7 @@ export class CalculateChangeDto {
     total: number;
 
     @IsNumber()
-    @IsGreaterThan('total', {message: 'Amount received must be greater than total'})
+    // @IsGreaterThan('total', {message: 'Amount received must be greater than total'})
     amountReceived: number;
 
     @IsString()

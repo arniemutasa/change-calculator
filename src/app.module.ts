@@ -4,6 +4,8 @@ import { ConfigModule } from '@nestjs/config';
 import { HttpModule } from '@nestjs/axios';
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 import { APP_GUARD } from '@nestjs/core';
+import { DatabaseModule } from './database/database.module';
+import { FloatModule } from './float/float.module';
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -16,7 +18,7 @@ import { APP_GUARD } from '@nestjs/core';
   }]),
   
   
-  HttpModule, ChangeModule ],
+  HttpModule, ChangeModule, DatabaseModule, FloatModule ],
   controllers: [],
   providers: [{
     provide: APP_GUARD,
